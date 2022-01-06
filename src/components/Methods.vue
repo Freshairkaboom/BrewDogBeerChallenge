@@ -7,7 +7,7 @@
         <button class="idleButton" v-on:click="mashBeer()" ref="buttonMash">
           Idle
         </button>
-        Mashing - Duration: {{ this.mashCounter }}
+        Mashing - Duration: {{ this.mashCounter }} seconds left. ({{currentMashIndex+1}}/{{this.selectedBeer.method.mash_temp.length}})
       </li>
       <li>
         <button class="idleButton" v-on:click="fermentBeer()" ref="buttonFerment">Idle</button> Fermentation
@@ -32,7 +32,7 @@ export default {
 
   mounted() {
     this.mashCounter =
-      this.selectedBeer.method.mash_temp[this.currentMashIndex].duration;
+      this.selectedBeer.method.mash_temp[this.currentMashIndex].duration*60;
   },
 
   watch: {
@@ -42,7 +42,7 @@ export default {
         this.isRunning = false;
 
       this.mashCounter =
-        this.selectedBeer.method.mash_temp[this.currentMashIndex].duration;
+        this.selectedBeer.method.mash_temp[this.currentMashIndex].duration*60;
 
       var buttonList = document.getElementsByClassName("idleButton");
 
@@ -89,7 +89,7 @@ export default {
         ) {
             this.currentMashIndex++;
             this.mashCounter =
-            this.selectedBeer.method.mash_temp[this.currentMashIndex].duration;
+            this.selectedBeer.method.mash_temp[this.currentMashIndex].duration*60;
         } else if (
             this.currentMashIndex >= this.selectedBeer.method.mash_temp.length - 1
         ) {
