@@ -7,7 +7,7 @@
         <button class="idleButton" v-on:click="mashBeer()" ref="buttonMash">
           Idle
         </button>
-        Mashing - Duration: {{ this.mashCounter }} seconds left. ({{currentMashIndex+1}}/{{this.selectedBeer.method.mash_temp.length}})
+        Mashing - Duration: {{ this.mashCounter }} seconds left. ({{currentMashIndex+1}}/{{selectedBeer.method.mash_temp.length}})
       </li>
       <li>
         <button class="idleButton" v-on:click="fermentBeer()" ref="buttonFerment">Idle</button> Fermentation
