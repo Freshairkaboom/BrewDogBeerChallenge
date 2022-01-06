@@ -1,13 +1,14 @@
 <template>
-<div id="beerlist">
+<div>
   <header><h1>Beer List</h1></header>
 
   <div id="listcontainer">
-    <ul>
-      <li v-for="beer in beerList.slice(0,4)" :key="beer.name">
-        <img class="beerIcon" v-bind:src=beer.image_url alt="hei" v-on:click="selectBeer(beer.id)">
+    <ul style="list-style: none">
+      <li style="border:1px solid black" v-for="beer in beerList" :key="beer.name" v-on:click="selectBeer(beer)">
+        <img class="beerIcon" v-bind:src=beer.image_url alt="hei">
         <div>{{beer.name}}</div>
         <div>ABV: {{beer.abv}}</div>
+        <hr>
         <div>{{beer.description}}</div>
       </li>
     </ul>
@@ -23,16 +24,14 @@ export default {
     this.getBeerListFromAPI()
   },
 
-  data: function () {
-      return {
-        beerList: [],
-        selectedBeer: this.$store.state.selectedBeer
-      }
-    },
+  data() {
+    return {
+      beerList: [],
+    }
+  },
 
   methods: {
     async getBeerListFromAPI() {
-      console.log(this.$store.state.selectedBeer)
 
       fetch("https://api.punkapi.com/v2/beers")
       .then(response => response.json())
@@ -43,13 +42,8 @@ export default {
       });
     },
 
-    selectBeer(id) {
-      this.beerList.forEach(beer => {
-        if(beer.id == id) {
-          this.$store.state.selectedBeer = beer;
-          console.log(this.$store.state.selectedBeer);
-        }
-      })
+    selectBeer(beer) {
+      this.$store.dispatch("mutateSelectedBeer", beer);
     }
   }
 }

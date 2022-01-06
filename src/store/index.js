@@ -7,9 +7,19 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
  state: {
-     selectedBeer: "hei",
+     selectedBeer: "",
  },
- getters: {},
- mutations: {},
- actions: {}
+ getters: {
+    getSelectedBeer: state => {return state.selectedBeer},
+ },
+ mutations: {
+    setSelectedBeer(state, beer) {
+        state.selectedBeer = beer;
+    }
+ },
+ actions: {
+    mutateSelectedBeer({commit}, beer) {
+        commit("setSelectedBeer", beer);
+    }
+ }
 });
