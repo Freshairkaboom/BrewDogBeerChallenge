@@ -27,7 +27,7 @@ export default {
   },
 
   mounted() {
-    this.getHopsAddTotals();
+    if(this.isHops) this.getHopsAddTotals();
   },
 
   computed: {
