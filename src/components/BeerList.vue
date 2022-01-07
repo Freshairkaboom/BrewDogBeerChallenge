@@ -4,7 +4,7 @@
 
   <div id="listcontainer">
     <ul style="list-style: none">
-      <li style="border:1px solid black" v-for="beer in beerList" :key="beer.name" v-on:click="selectBeer(beer)">
+      <li style="border:1px solid black" v-for="(beer, index) in beerList" :key="beer.name + index" v-on:click="selectBeer(beer)">
         <img class="beerIcon" v-bind:src=beer.image_url alt="hei">
         <div>{{beer.name}}</div>
         <div>ABV: {{beer.abv}}</div>
@@ -32,14 +32,18 @@ export default {
 
   methods: {
     async getBeerListFromAPI() {
+      try {
+        let response = await fetch("https://api.punkapi.com/v2/beers");
+      let data = await response.json();
 
-      fetch("https://api.punkapi.com/v2/beers")
-      .then(response => response.json())
-      .then((data) => {
-        data.forEach((result) => {
-          this.beerList.push(result)
-        });
+      data.forEach((result) => {
+        this.beerList.push(result)
       });
+      }
+      catch (err) {
+        console.log(err);
+      }
+
     },
 
     selectBeer(beer) {
