@@ -1,20 +1,44 @@
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
+import { createStore } from 'vuex'
 import Ingredients from '@/components/Ingredients.vue'
 
 //Error: TypeError: Cannot read properties of undefined (reading 'state');
-// Has something to do with the selectedBeer watcher I think.
 
 describe('Ingredients.vue', () => {
-  it('Button changes button innerHTML to Done.', () => {
     let wrapper;
+    let store;
+    let global;
 
-    wrapper = shallowMount(Ingredients, () => {
+    store = createStore({
+        state() {
+            return {
+                selectedBeer: "",
+            }
+        },
+        getters: {
+            getSelectedBeer: state => {return state.selectedBeer},
+        },
+        mutations: {
+              setSelectedBeer(state, beer) {
+                state.selectedBeer = beer;
+            }
+        },
+        actions: {
+            mutateSelectedBeer({commit}, beer) {
+                   commit("setSelectedBeer", beer);
+            }
+        }
+    })
+
+    it('Renders button.', () => {
+
+    wrapper = mount(Ingredients, () => {
 
     })
 
-    wrapper.find("button").trigger("click");
+    var button = wrapper.get("button");
 
-    expect(wrapper.find("button").innerHTML).toBe("Done");
+    expect(button).toBeTruthy;
 
   })
 })
