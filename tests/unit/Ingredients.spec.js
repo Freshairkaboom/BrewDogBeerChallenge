@@ -15,109 +15,95 @@ describe("Ingredients", () => {
     let mockSelectFnc;
     let state = {selectedBeer: jest.fn()}
 
-    mockSelectFnc = jest.fn();
+    beforeEach(()=>{
+      mockSelectFnc = jest.fn();
     store = new Vuex.Store({
         state,
         getters: {getSelectedBeer: ()=>{jest.fn()}},
         mutations: {select: mockSelectFnc },
     })
 
-    test('Renders button when ingredientList contains malts.', () => {
-
     wrapper = mount(Ingredients, {
-        store,
-        localVue,
-        propsData: {
-          ingredientList: [
-            {
-            "name": "Maris Otter Extra Pale",
-            "amount": {
-            "value": 3.3,
-            "unit": "kilograms"
-            }
-            },
-            {
-            "name": "Caramalt",
-            "amount": {
-            "value": 0.2,
-            "unit": "kilograms"
-            }
-            },
-            {
-            "name": "Munich",
-            "amount": {
-            "value": 0.4,
-            "unit": "kilograms"
-            }
-            }
-            ]
-        }
+      store,
+      localVue,
+      propsData: {
+        ingredientList: [
+          {
+          "name": "Fuggles",
+          "amount": {
+          "value": 25,
+          "unit": "grams"
+          },
+          "add": "start",
+          "attribute": "bitter"
+          },
+          ]
+      }
     })
+
+  })
+
+  test('Renders button when ingredientList contains malts.', () => {
 
     var button = wrapper.get("button");
 
     expect(button).toBeTruthy;
 
   })
-    test('Renders button when ingredientList contains hops.', () => {
-
-    wrapper = mount(Ingredients, {
-        store,
-        localVue,
-        propsData: {
-          ingredientList: [
-            {
-            "name": "Fuggles",
-            "amount": {
-            "value": 25,
-            "unit": "grams"
-            },
-            "add": "start",
-            "attribute": "bitter"
-            },
-            {
-            "name": "First Gold",
-            "amount": {
-            "value": 25,
-            "unit": "grams"
-            },
-            "add": "start",
-            "attribute": "bitter"
-            },
-            {
-            "name": "Fuggles",
-            "amount": {
-            "value": 37.5,
-            "unit": "grams"
-            },
-            "add": "middle",
-            "attribute": "flavour"
-            },
-            {
-            "name": "First Gold",
-            "amount": {
-            "value": 37.5,
-            "unit": "grams"
-            },
-            "add": "middle",
-            "attribute": "flavour"
-            },
-            {
-            "name": "Cascade",
-            "amount": {
-            "value": 37.5,
-            "unit": "grams"
-            },
-            "add": "end",
-            "attribute": "flavour"
-            }
-            ]
-        }
-    })
+  test('Renders button when ingredientList contains hops.', () => {
 
     var button = wrapper.get("button");
 
     expect(button).toBeTruthy;
 
   })
+  test('Rendered button switches from Idle to Done when clicked.', () => {
+
+    var button = wrapper.get("button");
+
+    expect(button.text()).toBe("Idle")
+
+    button.trigger("click");
+
+    expect(button.text()).toBe("Done");
+
+  })
+  // test('Rendered button does not switch from Idle to Done if "add" attribute of ingredient is "middle" when there is a button present that has attribute of "start" and is not Done.', () => {
+
+  //   wrapper = mount(Ingredients, {
+  //     store,
+  //     localVue,
+  //     propsData: {
+  //       ingredientList: [
+  //         {
+  //           "name": "First Gold",
+  //           "amount": {
+  //           "value": 37.5,
+  //           "unit": "grams"
+  //           },
+  //           "add": "middle",
+  //           "attribute": "flavour"
+  //         },
+  //         {
+  //         "name": "Fuggles",
+  //         "amount": {
+  //         "value": 25,
+  //         "unit": "grams"
+  //         },
+  //         "add": "start",
+  //         "attribute": "bitter"
+  //         },
+  //         ]
+  //     }
+  //   })
+
+  //   var button = wrapper.get("button");
+
+  //   expect(button.text()).toBe("Idle")
+
+  //   button.trigger("click");
+
+  //   expect(button.text()).toBe("Idle");
+
+  // })
 })

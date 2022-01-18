@@ -43,10 +43,6 @@ export default {
       startHops: { added: 0, total: 0 },
       middleHops: { added: 0, total: 0 },
       endHops: { added: 0, total: 0 },
-      hopValues(ingredientOrder) {
-          alert("hei")
-          this.incrementHopValues(ingredientOrder);
-      }
     };
   },
 
