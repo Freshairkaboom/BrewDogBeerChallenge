@@ -9,54 +9,38 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 
 describe("Ingredients", () => {
-    let wrapper;
-    let store;
-    let beer;
-    let mockSelectFnc;
-    let state = {selectedBeer: jest.fn()}
+  let wrapper;
+  let store;
+  let mockSelectFnc;
+  let state = { selectedBeer: jest.fn() }
 
-    beforeEach(()=>{
-      mockSelectFnc = jest.fn();
+  beforeEach(()=>{
+    mockSelectFnc = jest.fn();
     store = new Vuex.Store({
-        state,
-        getters: {getSelectedBeer: ()=>{jest.fn()}},
-        mutations: {select: mockSelectFnc },
-    })
+      state,
+      mutations: { select: mockSelectFnc },
+    }),
 
     wrapper = mount(Ingredients, {
       store,
       localVue,
       propsData: {
-        ingredientList: [
-          {
+      ingredientList: [
+        {
           "name": "Fuggles",
           "amount": {
-          "value": 25,
-          "unit": "grams"
+            "value": 25,
+            "unit": "grams"
           },
           "add": "start",
           "attribute": "bitter"
-          },
-          ]
+        },
+      ]
       }
     })
-
   })
 
-  test('Renders button when ingredientList contains malts.', () => {
 
-    var button = wrapper.get("button");
-
-    expect(button).toBeTruthy;
-
-  })
-  test('Renders button when ingredientList contains hops.', () => {
-
-    var button = wrapper.get("button");
-
-    expect(button).toBeTruthy;
-
-  })
   test('Rendered button switches from Idle to Done when clicked.', () => {
 
     var button = wrapper.get("button");
@@ -68,42 +52,122 @@ describe("Ingredients", () => {
     expect(button.text()).toBe("Done");
 
   })
-  // test('Rendered button does not switch from Idle to Done if "add" attribute of ingredient is "middle" when there is a button present that has attribute of "start" and is not Done.', () => {
+  test('Renders button when ingredientList contains malts.', () => {
 
-  //   wrapper = mount(Ingredients, {
-  //     store,
-  //     localVue,
-  //     propsData: {
-  //       ingredientList: [
-  //         {
-  //           "name": "First Gold",
-  //           "amount": {
-  //           "value": 37.5,
-  //           "unit": "grams"
-  //           },
-  //           "add": "middle",
-  //           "attribute": "flavour"
-  //         },
-  //         {
-  //         "name": "Fuggles",
-  //         "amount": {
-  //         "value": 25,
-  //         "unit": "grams"
-  //         },
-  //         "add": "start",
-  //         "attribute": "bitter"
-  //         },
-  //         ]
-  //     }
-  //   })
+    wrapper = mount(Ingredients, {
+      store,
+      localVue,
+      propsData: {
+      ingredientList: [
+        {
+        "name": "Maris Otter Extra Pale",
+        "amount": {
+        "value": 3.3,
+        "unit": "kilograms"
+        }
+        },
+        {
+        "name": "Caramalt",
+        "amount": {
+        "value": 0.2,
+        "unit": "kilograms"
+        }
+        },
+        {
+        "name": "Munich",
+        "amount": {
+        "value": 0.4,
+        "unit": "kilograms"
+        }
+        }
+        ]
+      }
+    })
 
-  //   var button = wrapper.get("button");
+    var button = wrapper.get("button");
 
-  //   expect(button.text()).toBe("Idle")
+    expect(button).toBeTruthy;
 
-  //   button.trigger("click");
+  })
+  test('Renders button when ingredientList contains hops.', () => {
 
-  //   expect(button.text()).toBe("Idle");
+    wrapper = mount(Ingredients, {
+      store,
+      localVue,
+      propsData: {
+      ingredientList: [
+        {
+        "name": "Fuggles",
+        "amount": {
+        "value": 25,
+        "unit": "grams"
+        },
+        "add": "start",
+        "attribute": "bitter"
+        },
+        {
+        "name": "First Gold",
+        "amount": {
+        "value": 25,
+        "unit": "grams"
+        },
+        "add": "start",
+        "attribute": "bitter"
+        },
+        {
+        "name": "Fuggles",
+        "amount": {
+        "value": 37.5,
+        "unit": "grams"
+        },
+        "add": "middle",
+        "attribute": "flavour"
+        },
+        ]
+      }
+    })
 
-  // })
+    var button = wrapper.get("button");
+
+    expect(button).toBeTruthy;
+
+  })
+  test('Rendered button does not switch from Idle to Done if "add" attribute of ingredient is "middle" when there is a button present that has attribute of "start" and is not Done.', () => {
+
+    wrapper = mount(Ingredients, {
+      store,
+      localVue,
+      propsData: {
+      ingredientList: [
+        {
+        "name": "Fuggles",
+        "amount": {
+        "value": 25,
+        "unit": "grams"
+        },
+        "add": "middle",
+        "attribute": "bitter"
+        },
+        {
+        "name": "First Gold",
+        "amount": {
+        "value": 25,
+        "unit": "grams"
+        },
+        "add": "start",
+        "attribute": "bitter"
+        },
+        ]
+      }
+    })
+
+    var button = wrapper.get("button");
+
+    expect(button.text()).toBe("Idle")
+
+    button.trigger("click");
+
+    expect(button.text()).toBe("Idle");
+
+  })
 })
