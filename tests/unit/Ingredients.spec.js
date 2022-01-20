@@ -2,8 +2,6 @@ import { mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Ingredients from '@/components/Ingredients.vue'
 
-//Error: TypeError: Cannot read properties of undefined (reading 'state');
-
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
@@ -12,19 +10,19 @@ describe("Ingredients", () => {
   let wrapper;
   let store;
   let mockSelectFnc;
-  let state = { selectedBeer: jest.fn() }
 
   beforeEach(()=>{
     mockSelectFnc = jest.fn();
     store = new Vuex.Store({
-      state,
-      mutations: { select: mockSelectFnc },
+      state: { selectedBeer: jest.fn() },
+      mutations: { select: jest.fn() },
     }),
 
     wrapper = mount(Ingredients, {
       store,
       localVue,
       propsData: {
+      isHops: true,
       ingredientList: [
         {
           "name": "Fuggles",
@@ -39,7 +37,6 @@ describe("Ingredients", () => {
       }
     })
   })
-
 
   test('Rendered button switches from Idle to Done when clicked.', () => {
 
@@ -58,6 +55,7 @@ describe("Ingredients", () => {
       store,
       localVue,
       propsData: {
+      isHops: false,
       ingredientList: [
         {
         "name": "Maris Otter Extra Pale",
@@ -94,7 +92,9 @@ describe("Ingredients", () => {
     wrapper = mount(Ingredients, {
       store,
       localVue,
+      isHops: true,
       propsData: {
+      isHops: true,
       ingredientList: [
         {
         "name": "Fuggles",
@@ -138,6 +138,7 @@ describe("Ingredients", () => {
       store,
       localVue,
       propsData: {
+      isHops: true,
       ingredientList: [
         {
         "name": "Fuggles",
