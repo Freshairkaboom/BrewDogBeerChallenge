@@ -34,7 +34,7 @@ export default {
     async getBeerListFromAPI() {
       try {
         let response = await fetch("https://api.punkapi.com/v2/beers");
-      let data = await response.json();
+        let data = await response.json();
 
       data.forEach((result) => {
         this.beerList.push(result)

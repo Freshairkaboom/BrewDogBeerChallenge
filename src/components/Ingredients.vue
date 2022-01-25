@@ -24,9 +24,6 @@ export default {
 
   mounted() {
     if(this.isHops) this.getHopsAddTotals();
-    console.log("hi" + this.startHops.total)
-    console.log("hello" + this.middleHops.total)
-    console.log(this.endHops.total)
   },
 
   computed: {
