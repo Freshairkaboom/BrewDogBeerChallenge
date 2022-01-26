@@ -4,16 +4,16 @@
     <h2>Methods</h2>
     <ul>
       <li>
-        <button data-testid="mash" class="idleButton" v-on:click="mashBeer()" ref="buttonMash">
+        <button class="idleButton" v-on:click="mashBeer()" ref="buttonMash">
           Idle
         </button>
         Mashing - Duration: {{ this.mashCounter }} seconds left. ({{currentMashIndex+1}}/{{selectedBeer.method.mash_temp.length}})
       </li>
       <li>
-        <button data-testid="ferment" class="idleButton" v-on:click="fermentBeer()" ref="buttonFerment">Idle</button> Fermentation
+        <button class="idleButton" v-on:click="fermentBeer()" ref="buttonFerment">Idle</button> Fermentation
       </li>
       <li>
-        <button data-testid="twist" class="idleButton" v-on:click="addTwist()" ref="buttonTwist">Idle</button> Twist
+        <button class="idleButton" v-on:click="addTwist()" ref="buttonTwist">Idle</button> Twist
       </li>
     </ul>
   </div>
@@ -97,7 +97,8 @@ export default {
              this.$refs.buttonMash.innerHTML = "Done";
              this.isRunning = false;
         }
-        } else this.mashCounter--;
+      }
+      else this.mashCounter--;
     },
 
     fermentBeer() {
