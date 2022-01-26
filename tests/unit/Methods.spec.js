@@ -213,6 +213,26 @@ describe("Methods", () => {
 
         expect(beforeCount > wrapper.vm.mashCounter).toBe(true);
     })
+    test('Pressing ferment button changes the text inside from Idle to Done.', () => {
+
+        const ferment = wrapper.find({ ref: "buttonFerment" });
+
+        expect(ferment.text()).toBe("Idle");
+
+        ferment.trigger('click');
+
+        expect(ferment.text()).toBe("Done");
+    })
+    test('Pressing twist button changes the text inside from Idle to Done.', () => {
+
+        const twist = wrapper.find({ ref: "buttonTwist" });
+
+        expect(twist.text()).toBe("Idle");
+
+        twist.trigger('click');
+
+        expect(twist.text()).toBe("Done");
+    })
 
     test('Finishing the duration of first mash session advances the currentMashIndex by one.', () => {
         expect(wrapper.vm.currentMashIndex == 0).toBe(true);
