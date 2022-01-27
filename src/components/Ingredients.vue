@@ -15,7 +15,7 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
-import addIngredientImpl from '@/logic.js';
+import addIngredientImpl from "@/testlogic/ingredientsLogic.js";
 
 export default {
   name: "Ingredients",
@@ -55,7 +55,6 @@ export default {
 
   methods: {
     addIngredient(index) {
-      console.log("doneIngredients: " + this.doneIngredients)
       addIngredientImpl(this.ingredientList, this.hopCounter, index, this.doneIngredients);
     },
 
@@ -70,19 +69,7 @@ export default {
           this.hopCounter.middleHops.total++;
         else if (this.ingredientList[i].add == "end") this.hopCounter.endHops.total++;
       }
-
-      // console.log("Start: " + this.hopCounter.startHops.total)
-      // console.log("Middle: " + this.hopCounter.middleHops.total)
-      // console.log("End: " + this.hopCounter.endHops.total)
     },
-
-    // resetButtonsToIdle() {
-    //   var buttonList = document.getElementsByClassName("idleButton");
-
-    //   for (var j = 0; j < buttonList.length; j++) {
-    //     buttonList[j].innerHTML = "Idle";
-    //   }
-    // },
   },
 };
 </script>

@@ -1,15 +1,29 @@
 export default function addIngredientImpl(ingredientList, hopCounter, index, doneIngredients) {
-    var ingredientOrder = ingredientList[index].add;
 
     var isCorrectOrder;
+    var ingredientOrder;
 
-    if(ingredientList[0].add) isCorrectOrder = checkIfCorrectOrder(ingredientOrder, hopCounter);
-    else isCorrectOrder = true;
+    if(ingredientList[index]){
+      ingredientOrder = ingredientList[index].add;
+      isCorrectOrder = checkIfCorrectOrder(ingredientOrder, hopCounter);
+    }
+
+    else isCorrectOrder = false;
 
     if (isCorrectOrder) {
         incrementHopValues(ingredientOrder, hopCounter);
         doneIngredients.push(index);
     }
+}
+function checkIfCorrectOrder(ingredientOrder, hopCounter) {
+  if (ingredientOrder == "start") return true;
+  else if (ingredientOrder == "middle") {
+      if(hopCounter.startHops.added == hopCounter.startHops.total) return true;
+  }
+  else if (ingredientOrder == "end") {
+      if(hopCounter.startHops.added == hopCounter.startHops.total && hopCounter.middleHops.added == hopCounter.middleHops.total) return true;
+  }
+  return false;
 }
 
 function incrementHopValues(ingredientOrder, hopCounter) {
@@ -28,15 +42,4 @@ function incrementHopValues(ingredientOrder, hopCounter) {
     hopCounter.endHops.added < hopCounter.endHops.total
   )
   hopCounter.endHops.added++;
-}
-
-function checkIfCorrectOrder(ingredientOrder, hopCounter) {
-  if (ingredientOrder == "start") return true;
-  else if (ingredientOrder == "middle") {
-      if(hopCounter.startHops.added == hopCounter.startHops.total) return true;
-  }
-  else if (ingredientOrder == "end") {
-      if(hopCounter.startHops.added == hopCounter.startHops.total && hopCounter.middleHops.added == hopCounter.middleHops.total) return true;
-  }
-  return false;
 }
