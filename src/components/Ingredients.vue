@@ -7,7 +7,7 @@
         v-for="(ingredient, index) in ingredientList"
         :key="index + ingredient"
       >
-        <button v-on:click="addIngredient(ingredientList, hopCounter, index, doneIngredients, checkIfCorrectOrder, incrementHopValues, isHops)">
+        <button v-on:click="addIngredient(index)">
           {{ doneIngredients.includes(index) ? "Done" : "Idle" }}
         </button>
         {{ ingredient.name }} {{ ingredient.add ? "- " + ingredient.add : "" }}
@@ -18,8 +18,8 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
-import addIngredientImpl from '@/testlogic/IngredientsLogic.js'
-import getHopsAddTotalsImpl from '@/testlogic/IngredientsLogic.js'
+import addIngredientImpl from '@/logic/IngredientsLogic.js'
+import getHopsAddTotalsImpl from '@/logic/IngredientsLogic.js'
 
 export default {
   name: "Ingredients",

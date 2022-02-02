@@ -4,18 +4,19 @@ export default function addIngredientImpl(dataObj, index) {
 
     if (dataObj.ingredientList[index]) {
       ingredientOrder = dataObj.ingredientList[index].add;
-      isCorrectOrder = checkIfCorrectOrderImpl(ingredientOrder, dataObj.hopCounter);
+      isCorrectOrder = checkIfCorrectOrder(ingredientOrder, dataObj.hopCounter);
+      console.log(isCorrectOrder + "fde")
     }
     else isCorrectOrder = false;
     if(!dataObj.isHops) isCorrectOrder = true;
 
     if (isCorrectOrder) {
-      incrementHopValuesImpl(ingredientOrder, dataObj.hopCounter);
+      incrementHopValues(ingredientOrder, dataObj.hopCounter);
       dataObj.doneIngredients.push(index);
     }
   }
 
-  export function checkIfCorrectOrderImpl(ingredientOrder, hopCounter) {
+  function checkIfCorrectOrder(ingredientOrder, hopCounter) {
     if (ingredientOrder == "start") return true;
     else if (ingredientOrder == "middle") {
       if (hopCounter.startHops.added == hopCounter.startHops.total)
@@ -31,12 +32,14 @@ export default function addIngredientImpl(dataObj, index) {
     return false;
   }
 
-  export function incrementHopValuesImpl(ingredientOrder, hopCounter) {
+  function incrementHopValues(ingredientOrder, hopCounter) {
     if (
       ingredientOrder == "start" &&
       hopCounter.startHops.added < hopCounter.startHops.total
-    )
+    ) {
       hopCounter.startHops.added++;
+    }
+
     else if (
       ingredientOrder == "middle" &&
       hopCounter.middleHops.added < hopCounter.middleHops.total
