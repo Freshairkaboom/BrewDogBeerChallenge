@@ -4,10 +4,10 @@
     <h2>Methods</h2>
     <ul>
       <li>
-        <button class="idleButton" v-on:click="mashBeer()" ref="buttonMash">
-          Idle
+        <button class="idleButton" v-on:click="mashBeer(isRunning, mashButtonMsg, mashTimer)" ref="buttonMash">
+          {{mashButtonMsg}}
         </button>
-        Mashing - Duration: {{ this.mashCounter }} seconds left. ({{currentMashIndex+1}}/{{selectedBeer.method.mash_temp.length}})
+        Mashing - Duration: {{ mashCounter }} seconds left. ({{currentMashIndex+1}}/{{selectedBeer.method.mash_temp.length}})
       </li>
       <li>
         <button class="idleButton" v-on:click="fermentBeer()" ref="buttonFerment">Idle</button> Fermentation
@@ -37,18 +37,14 @@ export default {
 
   watch: {
     selectedBeer: function () {
-      clearInterval(this.startInterval);
+      var interval;
+
+      clearInterval(interval);
       this.currentMashIndex = 0;
       this.isRunning = false;
 
       this.mashCounter =
       this.selectedBeer.method.mash_temp[this.currentMashIndex].duration*60;
-
-      var buttonList = document.getElementsByClassName("idleButton");
-
-      for (var i = 0; i < buttonList.length; i++) {
-        buttonList[i].innerHTML = "Idle";
-      }
     },
   },
 
@@ -56,23 +52,25 @@ export default {
     return {
       currentMashIndex: 0,
       mashCounter: 0,
-      startInterval: null,
+      mashButtonMsg: "Idle",
       isRunning: false,
     };
   },
 
   methods: {
-    mashBeer() {
+    mashBeer(isRunning, buttonMsg, mashTimer) {
 
-      this.isRunning = !this.isRunning;
+      var interval;
 
-      if (this.isRunning) {
-        this.$refs.buttonMash.innerHTML = "Running";
-        this.startInterval = setInterval(this.mashTimer, 1000);
+      isRunning = !isRunning;
+
+      if (isRunning) {
+        buttonMsg = "Running";
+        interval = setInterval(mashTimer, 1000);
       }
-      if (!this.isRunning) {
-        clearInterval(this.startInterval);
-        this.$refs.buttonMash.innerHTML = "Paused";
+      if (!isRunning) {
+        clearInterval(interval);
+        buttonMsg = "Paused";
       }
     },
 
