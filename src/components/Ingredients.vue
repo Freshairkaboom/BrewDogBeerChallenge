@@ -19,7 +19,7 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import addIngredientImpl from '@/logic/IngredientsLogic.js'
-import getHopsAddTotalsImpl from '@/logic/IngredientsLogic.js'
+import { getHopsAddTotalsImpl } from '@/logic/IngredientsLogic.js'
 
 export default {
   name: "Ingredients",
@@ -30,7 +30,7 @@ export default {
   },
 
   mounted() {
-    if (this.isHops) this.getHopsAddTotals();
+    if (this.isHops) getHopsAddTotalsImpl(this);
   },
 
   computed: {
@@ -40,7 +40,7 @@ export default {
 
   watch: {
     selectedBeer: function () {
-      if (this.isHops) this.getHopsAddTotals();
+      if (this.isHops) getHopsAddTotalsImpl(this);
       this.doneIngredients.length = 0;
     },
   },

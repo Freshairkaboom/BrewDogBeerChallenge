@@ -1,38 +1,41 @@
-function mashBeer() {
+export default function mashBeerImpl(dataObj) {
 
-	this.isRunning = !this.isRunning;
+	var interval;
 
-	if (this.isRunning) {
-		this.$refs.buttonMash.innerHTML = "Running";
-		this.startInterval = setInterval(this.mashTimer, 1000);
+	dataObj.isRunning = !dataObj.isRunning;
+
+	if (dataObj.isRunning) {
+		dataObj.mashButtonMsg = "Running";
+		interval = setInterval(function() { mashTimer(dataObj) }, 1000);
 	}
-	if (!this.isRunning) {
-		clearInterval(this.startInterval);
-		this.$refs.buttonMash.innerHTML = "Paused";
+	if (!dataObj.isRunning) {
+		clearInterval(interval);
+		dataObj.mashButtonMsg = "Paused";
 	}
 }
 
-function mashTimer() {
-	if (this.mashCounter <= 0) {
-		clearInterval(this.mashCounter);
+function mashTimer(dataObj) {
+	if (dataObj.mashCounter <= 1) {
+		console.log(dataObj.mashCounter);
+		clearInterval(dataObj.mashCounter);
 
-		if (this.selectedBeer.method.mash_temp.length == 1) {
-			this.$refs.buttonMash.innerHTML = "Done"
-			this.isRunning = false;
+		if (dataObj.selectedBeer.method.mash_temp.length == 1) {
+			dataObj.mashButtonMsg = "Done"
+			dataObj.isRunning = false;
 		}
 		else if (
-			this.selectedBeer.method.mash_temp.length > 1 &&
-			this.currentMashIndex != this.selectedBeer.method.mash_temp.length - 1
+			dataObj.selectedBeer.method.mash_temp.length > 1 &&
+			dataObj.currentMashIndex != dataObj.selectedBeer.method.mash_temp.length - 1
 		) {
-			this.currentMashIndex++;
-			this.mashCounter =
-				this.selectedBeer.method.mash_temp[this.currentMashIndex].duration * 60;
+			dataObj.currentMashIndex++;
+			dataObj.mashCounter =
+				dataObj.selectedBeer.method.mash_temp[dataObj.currentMashIndex].duration * 60;
 		} else if (
-			this.currentMashIndex >= this.selectedBeer.method.mash_temp.length - 1
+			dataObj.currentMashIndex >= dataObj.selectedBeer.method.mash_temp.length - 1
 		) {
-			this.$refs.buttonMash.innerHTML = "Done";
-			this.isRunning = false;
+			dataObj.mashButtonMsg = "Done";
+			dataObj.isRunning = false;
 		}
 	}
-	else this.mashCounter--;
+	else dataObj.mashCounter--;
 }

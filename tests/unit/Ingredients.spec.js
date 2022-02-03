@@ -1,43 +1,64 @@
 import addIngredientImpl from '@/logic/IngredientsLogic.js'
-import getHopsAddTotalsImpl from '@/logic/IngredientsLogic.js'
+import { getHopsAddTotalsImpl } from '@/logic/IngredientsLogic.js'
 
-var dataObj;
+var dataObj = {
+  ingredientList: [
+    {
+      "name": "Fuggles",
+      "amount": {
+      "value": 25,
+      "unit": "grams"
+      },
+      "add": "start",
+      "attribute": "bitter"
+    },
+    {
+      "name": "Fuggles",
+      "amount": {
+      "value": 37.5,
+      "unit": "grams"
+      },
+      "add": "middle",
+      "attribute": "flavour"
+      }
+  ],
+  hopCounter: {
+    startHops: { added: 0, total: 0 },
+    middleHops: { added: 0, total: 0 },
+    endHops: { added: 0, total: 0 },
+  },
+  isHops: true,
+  doneIngredients: [],
+}
 var index;
 
 describe("Ingredients", () => {
 
   beforeEach(()=>{
-    dataObj = {
-      ingredientList: [
-        {
-          "name": "Fuggles",
-          "amount": {
-          "value": 25,
-          "unit": "grams"
-          },
-          "add": "start",
-          "attribute": "bitter"
+
+    dataObj.ingredientList = [
+      {
+        "name": "Fuggles",
+        "amount": {
+        "value": 25,
+        "unit": "grams"
         },
-        {
-          "name": "Fuggles",
-          "amount": {
-          "value": 37.5,
-          "unit": "grams"
-          },
-          "add": "middle",
-          "attribute": "flavour"
-          }
-      ],
-      hopCounter: {
-        startHops: { added: 0, total: 0 },
-        middleHops: { added: 0, total: 0 },
-        endHops: { added: 0, total: 0 },
+        "add": "start",
+        "attribute": "bitter"
       },
-      isHops: true,
-      doneIngredients: [],
-    }
+      {
+        "name": "Fuggles",
+        "amount": {
+        "value": 37.5,
+        "unit": "grams"
+        },
+        "add": "middle",
+        "attribute": "flavour"
+        }
+    ]
 
     index = 0;
+    dataObj.doneIngredients.length = 0;
 
     getHopsAddTotalsImpl(dataObj);
   })
@@ -70,7 +91,7 @@ describe("Ingredients", () => {
     expect(dataObj.doneIngredients.includes(index)).toBe(false);
   })
   it('addIngredients method does not push Index parameter into doneIngredients while Index does not exist in ingredientList.', () => {
-    index = 3;
+    index = 2;
 
     expect(dataObj.doneIngredients.includes(index)).toBe(false);
 
@@ -85,32 +106,8 @@ describe("Ingredients", () => {
 
     expect(dataObj.hopCounter.startHops.added).toBe(1);
   })
-  it('addIngredients method does not increment hopvalues when ingredientList contains malts.', () => {
-    dataObj.ingredientList = [
-      {
-        "name": "Maris Otter Extra Pale",
-        "amount": {
-        "value": 3.3,
-        "unit": "kilograms"
-        }
-        },
-        {
-        "name": "Caramalt",
-        "amount": {
-        "value": 0.2,
-        "unit": "kilograms"
-        }
-        },
-        {
-        "name": "Munich",
-        "amount": {
-        "value": 0.4,
-        "unit": "kilograms"
-        }
-        }
-    ]
-
-    dataObj.isHops = false;
+  it('addIngredients method does not increment hopvalues when isHops is true but index is not included in ingredientList.', () => {
+    index = 2;
 
     expect(dataObj.hopCounter.startHops.added).toBe(0);
 
